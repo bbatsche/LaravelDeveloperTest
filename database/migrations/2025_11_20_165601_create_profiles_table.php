@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +19,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('profiles', function (Blueprint $table) {
+        Schema::create('profiles', function (Blueprint $table): void {
             $table->id();
             // Could probably be considered the primary key, but safer to let MySQL handle it
             $table->integer('profile_id', unsigned: true)->unique();

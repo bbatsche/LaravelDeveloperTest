@@ -1,0 +1,15 @@
+{
+    "preset": "laravel",
+    "rules": {
+        "align_multiline_comment": true,
+        "declare_strict_types": true,
+        "explicit_string_variable": true,
+        "class_keyword": true,
+        "class_reference_name_casing": true,
+        "final_class": true,
+        "fully_qualified_strict_types": true,
+        "multiline_promoted_properties": true,
+        "psr_autoloading": true,
+        "void_return": true
+    }
+}

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Data;
@@ -20,8 +21,6 @@ final class AddressData extends Data
     private function __construct(
         #[GreaterThan(0)]
         public private(set) int $id,
-        #[GreaterThan(0)]
-        public private(set) Optional|int $profileId,
         #[Min(2), Max(191)]
         public private(set) string $street,
         #[Max(191)]
@@ -39,12 +38,11 @@ final class AddressData extends Data
     ) {
         $this->fullZip = is_null($this->zip4)
             ? $this->zip
-            : $this->zip . '-' . $this->zip4;
+            : $this->zip.'-'.$this->zip4;
     }
 
     public static function fromMultiple(
         int $id,
-        Optional|int $profileId,
         string $street,
         Optional|null|string $suite,
         string $zip,
@@ -56,7 +54,6 @@ final class AddressData extends Data
     ): self {
         return new self(
             $id,
-            $profileId,
             $street,
             $suite,
             $zip,

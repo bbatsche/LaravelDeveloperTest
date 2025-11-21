@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Data;
@@ -20,6 +21,7 @@ final class ProfileData extends Data
 {
     #[Computed]
     public private(set) string $telHref;
+
     #[Computed]
     public private(set) string $formattedPhone;
 
@@ -40,15 +42,17 @@ final class ProfileData extends Data
         public private(set) Optional|null|string $extension,
         #[Url]
         public private(set) string $website,
+        public private(set) Optional|AddressData $address,
+        public private(set) Optional|CompanyData $company,
         public private(set) Optional|DateTimeInterface $createdAt,
         public private(set) Optional|DateTimeInterface $updatedAt,
     ) {
         $this->telHref = is_null($this->extension)
             ? "tel:{$this->phone}"
             : "tel:{$this->phone},{$this->extension}";
-        $this->formattedPhone = '(' . substr($this->phone, 0, 3) . ') ' . substr($this->phone, 3, 3) . '-' . substr($this->phone, 6);
+        $this->formattedPhone = '('.substr($this->phone, 0, 3).') '.substr($this->phone, 3, 3).'-'.substr($this->phone, 6);
 
-        if (!is_null($this->extension)) {
+        if (! is_null($this->extension)) {
             $this->formattedPhone .= " ext. {$this->extension}";
         }
     }
@@ -62,6 +66,8 @@ final class ProfileData extends Data
         string $phone,
         Optional|null|string $extension,
         string $website,
+        Optional|AddressData $address,
+        Optional|CompanyData $company,
         Optional|DateTimeInterface $createdAt,
         Optional|DateTimeInterface $updatedAt,
     ): self {
@@ -74,6 +80,8 @@ final class ProfileData extends Data
             $phone,
             $extension,
             $website,
+            $address,
+            $company,
             $createdAt,
             $updatedAt,
         );
