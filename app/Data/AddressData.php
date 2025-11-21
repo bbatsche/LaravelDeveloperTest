@@ -1,0 +1,70 @@
+<?php
+declare(strict_types=1);
+
+namespace App\Data;
+
+use DateTimeInterface;
+use Spatie\LaravelData\Attributes\Computed;
+use Spatie\LaravelData\Attributes\Validation\Digits;
+use Spatie\LaravelData\Attributes\Validation\GreaterThan;
+use Spatie\LaravelData\Attributes\Validation\Max;
+use Spatie\LaravelData\Attributes\Validation\Min;
+use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Optional;
+
+final class AddressData extends Data
+{
+    #[Computed]
+    public private(set) string $fullZip;
+
+    private function __construct(
+        #[GreaterThan(0)]
+        public private(set) int $id,
+        #[GreaterThan(0)]
+        public private(set) Optional|int $profileId,
+        #[Min(2), Max(191)]
+        public private(set) string $street,
+        #[Max(191)]
+        public private(set) Optional|null|string $suite,
+        #[Digits(5)]
+        public private(set) string $zip,
+        #[Digits(4)]
+        public private(set) Optional|null|string $zip4,
+        #[Min(-90), Max(90)]
+        public private(set) float $latitude,
+        #[Min(-180), Max(180)]
+        public private(set) float $longitude,
+        public private(set) Optional|DateTimeInterface $createdAt,
+        public private(set) Optional|DateTimeInterface $updatedAt,
+    ) {
+        $this->fullZip = is_null($this->zip4)
+            ? $this->zip
+            : $this->zip . '-' . $this->zip4;
+    }
+
+    public static function fromMultiple(
+        int $id,
+        Optional|int $profileId,
+        string $street,
+        Optional|null|string $suite,
+        string $zip,
+        Optional|null|string $zip4,
+        float $latitude,
+        float $longitude,
+        Optional|DateTimeInterface $createdAt,
+        Optional|DateTimeInterface $updatedAt,
+    ): self {
+        return new self(
+            $id,
+            $profileId,
+            $street,
+            $suite,
+            $zip,
+            $zip4,
+            $latitude,
+            $longitude,
+            $createdAt,
+            $updatedAt,
+        );
+    }
+}
