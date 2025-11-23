@@ -13,7 +13,7 @@ use Spatie\LaravelData\Optional;
 
 final class CompanyData extends Data
 {
-    private function __construct(
+    public function __construct(
         #[GreaterThan(0)]
         public private(set) Optional|int $id,
         #[Min(2), Max(191)]

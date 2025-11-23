@@ -18,9 +18,9 @@ final class AddressData extends Data
     #[Computed]
     public private(set) string $fullZip;
 
-    private function __construct(
+    public function __construct(
         #[GreaterThan(0)]
-        public private(set) int $id,
+        public private(set) Optional|int $id,
         #[Min(2), Max(191)]
         public private(set) string $street,
         #[Max(191)]

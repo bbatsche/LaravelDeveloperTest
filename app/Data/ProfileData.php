@@ -25,7 +25,7 @@ final class ProfileData extends Data
     #[Computed]
     public private(set) string $formattedPhone;
 
-    private function __construct(
+    public function __construct(
         #[GreaterThan(0)]
         public private(set) Optional|int $id,
         #[GreaterThan(0)]

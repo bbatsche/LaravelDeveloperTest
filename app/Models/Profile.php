@@ -18,8 +18,6 @@ final class Profile extends Model
         'website',
     ];
 
-    protected array $with = ['address', 'company'];
-
     public function company(): HasOne
     {
         return $this->hasOne(Company::class);
