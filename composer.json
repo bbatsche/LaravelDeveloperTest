@@ -17,6 +17,7 @@
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
+        "larastan/larastan": "^3.8",
         "laravel/boost": "^1.6",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.24",
@@ -54,6 +55,8 @@
         ],
         "test": [
             "@php artisan config:clear --ansi",
+            "@format:check",
+            "@static:check",
             "@php artisan test"
         ],
         "post-autoload-dump": [
@@ -75,7 +78,9 @@
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
         ],
-        "pint": "pint"
+        "format:check": "pint --test",
+        "format:fix": "pint",
+        "static:check": "phpstan analyze"
     },
     "extra": {
         "laravel": {
