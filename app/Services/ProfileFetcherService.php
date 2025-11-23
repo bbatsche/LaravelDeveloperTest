@@ -49,16 +49,11 @@ final class ProfileFetcherService
     }
 
     /**
-     * Parse phone number into phone and extension parts.
-     *
-     * Handles various formats:
-     * - "1-770-736-8031 x56442" -> ["7707368031", "56442"]
-     * - "010-692-6593 x09125" -> ["0106926593", "09125"]
-     * - "1-463-123-4447" -> ["4631234447", null]
+     * Parse phone number into phone and extension parts with only digits.
      *
      * @return array{0: string, 1: null|string}
      */
-    private function parsePhone(string $phone): array
+    public function parsePhone(string $phone): array
     {
         $extension = null;
 
@@ -78,7 +73,7 @@ final class ProfileFetcherService
     /**
      * Normalize website URL to ensure it has a scheme.
      */
-    private function normalizeWebsite(string $website): string
+    public function normalizeWebsite(string $website): string
     {
         // If no scheme is present, add https://
         if (! str_starts_with($website, 'http://') && ! str_starts_with($website, 'https://')) {
@@ -91,7 +86,7 @@ final class ProfileFetcherService
     /**
      * Transform address array into structure compatible with AddressData.
      */
-    private function transformAddress(array $address): array
+    public function transformAddress(array $address): array
     {
         [$address['zip'], $address['zip4']] = $this->parseZipCode($address['zipcode']);
         $address['latitude'] = (float) $address['geo']['lat'];
@@ -111,7 +106,7 @@ final class ProfileFetcherService
      *
      * @return array{0: string, 1: null|string}
      */
-    private function parseZipCode(string $zipcode): array
+    public function parseZipCode(string $zipcode): array
     {
         return str_contains($zipcode, '-')
             ? explode('-', $zipcode)
