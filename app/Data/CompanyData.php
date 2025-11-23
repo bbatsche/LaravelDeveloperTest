@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Data;
 
-use DateTimeInterface;
+use DateTimeImmutable;
 use Spatie\LaravelData\Attributes\Validation\GreaterThan;
 use Spatie\LaravelData\Attributes\Validation\Max;
 use Spatie\LaravelData\Attributes\Validation\Min;
@@ -21,8 +21,8 @@ final class CompanyData extends Data
         public private(set) string $catchPhrase,
         #[Max(191)]
         public private(set) string $boilerplate,
-        public private(set) Optional|DateTimeInterface $createdAt,
-        public private(set) Optional|DateTimeInterface $updatedAt,
+        public private(set) Optional|DateTimeImmutable $createdAt,
+        public private(set) Optional|DateTimeImmutable $updatedAt,
     ) {}
 
     public static function fromMultiple(
@@ -30,8 +30,8 @@ final class CompanyData extends Data
         string $name,
         string $catchPhrase,
         string $boilerplate,
-        Optional|DateTimeInterface $createdAt,
-        Optional|DateTimeInterface $updatedAt,
+        Optional|DateTimeImmutable $createdAt,
+        Optional|DateTimeImmutable $updatedAt,
     ): self {
         return new self($id, $name, $catchPhrase, $boilerplate, $createdAt, $updatedAt);
     }

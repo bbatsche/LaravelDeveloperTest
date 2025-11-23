@@ -17,7 +17,7 @@ final class ProfileRepository
 
     public function find(int $id): ProfileData
     {
-        return ProfileData::from($this->model->with('address', 'business')->findOrFail($id));
+        return ProfileData::from($this->model->with('address', 'company')->findOrFail($id)->toArray());
     }
 
     /**

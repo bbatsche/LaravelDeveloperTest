@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Data;
 
-use DateTimeInterface;
+use DateTimeImmutable;
 use Spatie\LaravelData\Attributes\Computed;
 use Spatie\LaravelData\Attributes\Validation\Digits;
 use Spatie\LaravelData\Attributes\Validation\GreaterThan;
@@ -35,8 +35,8 @@ final class AddressData extends Data
         public private(set) float $latitude,
         #[Min(-180), Max(180)]
         public private(set) float $longitude,
-        public private(set) Optional|DateTimeInterface $createdAt,
-        public private(set) Optional|DateTimeInterface $updatedAt,
+        public private(set) Optional|DateTimeImmutable $createdAt,
+        public private(set) Optional|DateTimeImmutable $updatedAt,
     ) {
         $this->fullZip = is_null($this->zip4)
             ? $this->zip
@@ -52,8 +52,8 @@ final class AddressData extends Data
         Optional|null|string $zip4,
         float $latitude,
         float $longitude,
-        Optional|DateTimeInterface $createdAt,
-        Optional|DateTimeInterface $updatedAt,
+        Optional|DateTimeImmutable $createdAt,
+        Optional|DateTimeImmutable $updatedAt,
     ): self {
         return new self(
             $id,

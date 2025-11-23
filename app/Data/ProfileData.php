@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Data;
 
-use DateTimeInterface;
+use DateTimeImmutable;
 use Spatie\LaravelData\Attributes\Computed;
 use Spatie\LaravelData\Attributes\Validation\Digits;
 use Spatie\LaravelData\Attributes\Validation\DigitsBetween;
@@ -44,8 +44,8 @@ final class ProfileData extends Data
         public private(set) string $website,
         public private(set) Optional|AddressData $address,
         public private(set) Optional|CompanyData $company,
-        public private(set) Optional|DateTimeInterface $createdAt,
-        public private(set) Optional|DateTimeInterface $updatedAt,
+        public private(set) Optional|DateTimeImmutable $createdAt,
+        public private(set) Optional|DateTimeImmutable $updatedAt,
     ) {
         $this->telHref = is_null($this->extension)
             ? "tel:{$this->phone}"
@@ -68,8 +68,8 @@ final class ProfileData extends Data
         string $website,
         Optional|AddressData $address,
         Optional|CompanyData $company,
-        Optional|DateTimeInterface $createdAt,
-        Optional|DateTimeInterface $updatedAt,
+        Optional|DateTimeImmutable $createdAt,
+        Optional|DateTimeImmutable $updatedAt,
     ): self {
         return new self(
             $id,

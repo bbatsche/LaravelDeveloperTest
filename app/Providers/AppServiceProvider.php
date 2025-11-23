@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Repository\ProfileRepository;
 use App\Services\PlaceholderApiInterface;
 use App\Services\PlaceholderApiService;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 final class AppServiceProvider extends ServiceProvider
@@ -31,6 +33,8 @@ final class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Route::bind('profile', function (string $id) {
+            return $this->app->get(ProfileRepository::class)->find((int) $id);
+        });
     }
 }
