@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 final class Profile extends Model
 {
-    protected array $fillable = [
+    protected $fillable = [
+        'profile_id',
         'name',
         'username',
         'email',

@@ -25,6 +25,8 @@ final class AddressData extends Data
         public private(set) string $street,
         #[Max(191)]
         public private(set) Optional|null|string $suite,
+        #[Max(191)]
+        public private(set) string $city,
         #[Digits(5)]
         public private(set) string $zip,
         #[Digits(4)]
@@ -45,6 +47,7 @@ final class AddressData extends Data
         int $id,
         string $street,
         Optional|null|string $suite,
+        string $city,
         string $zip,
         Optional|null|string $zip4,
         float $latitude,
@@ -56,6 +59,7 @@ final class AddressData extends Data
             $id,
             $street,
             $suite,
+            $city,
             $zip,
             $zip4,
             $latitude,

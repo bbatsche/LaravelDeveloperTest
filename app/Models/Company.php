@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 final class Company extends Model
 {
-    protected array $fillable = [
+    protected $fillable = [
         'name',
         'catch_phrase',
         'boilerplate',

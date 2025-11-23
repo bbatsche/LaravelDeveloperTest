@@ -6,13 +6,13 @@ namespace App\Data;
 
 use DateTimeInterface;
 use Spatie\LaravelData\Attributes\Computed;
-use Spatie\LaravelData\Attributes\Validation\AlphaDash;
 use Spatie\LaravelData\Attributes\Validation\Digits;
 use Spatie\LaravelData\Attributes\Validation\DigitsBetween;
 use Spatie\LaravelData\Attributes\Validation\Email;
 use Spatie\LaravelData\Attributes\Validation\GreaterThan;
 use Spatie\LaravelData\Attributes\Validation\Max;
 use Spatie\LaravelData\Attributes\Validation\Min;
+use Spatie\LaravelData\Attributes\Validation\Regex;
 use Spatie\LaravelData\Attributes\Validation\Url;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Optional;
@@ -32,7 +32,7 @@ final class ProfileData extends Data
         public private(set) int $profileId,
         #[Min(2), Max(191)]
         public private(set) string $name,
-        #[Min(2), Max(191), AlphaDash]
+        #[Min(2), Max(191), Regex('/^[a-zA-Z0-9-_.]+$/')]
         public private(set) string $username,
         #[Max(191), Email]
         public private(set) string $email,
