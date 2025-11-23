@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Data\PostData;
+use App\Data\ProfileData;
+use App\Repository\PostRepository;
 use App\Repository\ProfileRepository;
 use App\Services\PlaceholderApiInterface;
 use App\Services\PlaceholderApiService;
@@ -25,7 +28,7 @@ final class AppServiceProvider extends ServiceProvider
     {
         $this->app->when(PlaceholderApiService::class)
             ->needs(Client::class)
-            ->give(fn () => new Client(['base_uri' => Config::get('placeholder-api.base_url')]));
+            ->give(fn (): Client => new Client(['base_uri' => Config::get('placeholder-api.base_url')]));
     }
 
     /**
@@ -33,8 +36,11 @@ final class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Route::bind('profile', function (string $id) {
+        Route::bind('profile', function (string $id): ProfileData {
             return $this->app->get(ProfileRepository::class)->find((int) $id);
+        });
+        Route::bind('post', function (string $id): PostData {
+            return $this->app->get(PostRepository::class)->find((int) $id);
         });
     }
 }

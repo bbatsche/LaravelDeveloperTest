@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Jobs\FetchPosts;
 use App\Jobs\FetchProfiles;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
@@ -12,4 +13,8 @@ Artisan::command('inspire', function (): void {
 
 Artisan::command('fetch:profiles', function (): void {
     FetchProfiles::dispatch();
-});
+})->purpose('Fetch profile data from Placeholder API');
+
+Artisan::command('fetch:posts', function (): void {
+    FetchPosts::dispatch();
+})->purpose('Fetch post data from Placeholder API');

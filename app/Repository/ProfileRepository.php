@@ -8,8 +8,12 @@ use App\Data\ProfileData;
 use App\Models\Profile;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Spatie\LaravelData\Data;
 
-final class ProfileRepository
+/**
+ * @implements RepositoryInterface<ProfileData>
+ */
+final class ProfileRepository implements RepositoryInterface
 {
     public function __construct(
         private Profile $model,
@@ -33,7 +37,10 @@ final class ProfileRepository
         return $this->model->where('profile_id', $profileId)->count() > 0;
     }
 
-    public function create(ProfileData $profile): ProfileData
+    /**
+     * @param  ProfileData  $profile
+     */
+    public function create(Data $profile): ProfileData
     {
         return DB::transaction(function () use ($profile): ProfileData {
             /** @var Profile */

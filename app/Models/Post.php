@@ -7,20 +7,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-final class Address extends Model
+final class Post extends Model
 {
     protected $fillable = [
-        'street',
-        'suite',
-        'city',
-        'zip',
-        'zip4',
-        'latitude',
-        'longitude',
+        'post_id',
+        'profile_id',
+        'title',
+        'body',
     ];
 
     public function profile(): BelongsTo
     {
-        return $this->belongsTo(Profile::class);
+        return $this->belongsTo(Profile::class, 'profile_id', 'profile_id');
     }
 }

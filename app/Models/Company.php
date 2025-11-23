@@ -15,7 +15,7 @@ final class Company extends Model
         'boilerplate',
     ];
 
-    public function Profile(): BelongsTo
+    public function profile(): BelongsTo
     {
         return $this->belongsTo(Profile::class);
     }
