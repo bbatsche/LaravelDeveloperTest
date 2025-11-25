@@ -8,6 +8,9 @@ use App\Data\ProfileData;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
+/**
+ * Utility for fetching user/profile data from JSON Placeholder API and transforming it into data objects.
+ */
 final class ProfileFetcherService
 {
     public function __construct(
@@ -15,7 +18,7 @@ final class ProfileFetcherService
     ) {}
 
     /**
-     * Fetch all profiles from the JSONPlaceholder API.
+     * Get all users/profiles and wrap them in a Collection of ProfileData
      *
      * @return Collection<ProfileData>
      */
@@ -32,6 +35,9 @@ final class ProfileFetcherService
         );
     }
 
+    /**
+     * Modify & cleanup data from JSON Placeholder API to be inline with what ProfileData expects.
+     */
     public function transformResponseData(array $user): array
     {
         $user['profile_id'] = $user['id'];

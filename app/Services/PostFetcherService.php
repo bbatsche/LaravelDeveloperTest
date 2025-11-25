@@ -8,6 +8,9 @@ use App\Data\PostData;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
+/**
+ * Utility for fetching posts data from JSON Placeholder API and transforming it into data objects.
+ */
 final class PostFetcherService
 {
     public function __construct(
@@ -15,6 +18,8 @@ final class PostFetcherService
     ) {}
 
     /**
+     * Get all posts and wrap them in a Collection of PostData
+     *
      * @return Collection<PostData>
      */
     public function fetchPosts(): Collection
@@ -24,6 +29,12 @@ final class PostFetcherService
         return PostData::collect($posts, Collection::class);
     }
 
+    /**
+     * Modify keys from JSON Placeholder API to be inline with what PostData expects.
+     *
+     * We could *probably* do this internally to the PostData class but enforcing a boundary
+     * here means all data from this point *should* be consistent.
+     */
     public function transformPost(array $post): array
     {
         $post['profile_id'] = $post['userId'];

@@ -25,12 +25,18 @@ final class PlaceholderApiService implements PlaceholderApiInterface
         return $this->sendRequest('/posts');
     }
 
+    /**
+     * Simple wrapper to send a GET request to JSON Placeholder API and parse its results.
+     *
+     * @throws RuntimeException if the server responds with an error
+     */
     private function sendRequest(string $endpoint): array
     {
         try {
             $response = $this->client->get($endpoint);
         } catch (BadResponseException $e) {
             // If a more severe exception is thrown we'll let it bubble up
+            // Otherwise let's convert to a RuntimeException
             throw new RuntimeException(
                 "Error sending request for {$endpoint}",
                 $e->getResponse()->getStatusCode(),
