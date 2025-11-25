@@ -25,7 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withSchedule(function (Schedule $schedule): void {
         $schedule->call(function (): void {
-            Bus::chain([new FetchProfiles(), new FetchPosts()])->dispatch();
+            Bus::chain([new FetchProfiles, new FetchPosts])->dispatch();
         })->hourly();
     })
     ->create();
