@@ -10,6 +10,6 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body>
-        <main id="app" class="mx-auto max-w-5xl"></main>
+        <main id="app" class="mx-auto container"></main>
     </body>
 </html>
