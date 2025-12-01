@@ -11,6 +11,7 @@ use App\Repository\RepositoryInterface;
 use App\Services\EntityFetcherInterface;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Facades\Log;
 
 final class FetchPosts implements ShouldQueue
 {
@@ -27,15 +28,25 @@ final class FetchPosts implements ShouldQueue
         RepositoryInterface $postRepo,
         RepositoryInterface $profileRepo,
     ): void {
+        Log::info('Starting Fetch Posts Job');
+
         $client->fetchEntities()->each(function (PostData $post) use ($postRepo, $profileRepo): void {
             if (! $profileRepo->exists($post->profileId)) {
-                // There is no profile for this post; has profile job not been run yet?
+                Log::warning('No profile found for post!', compact('post'));
+
                 return;
             }
 
-            if (! $postRepo->exists($post->postId)) {
-                $postRepo->create($post);
+            if ($postRepo->exists($post->postId)) {
+                Log::debug('Post already exists in database', compact('post'));
+
+                return;
             }
+
+            $postRepo->create($post);
+            Log::info('Post created', compact('post'));
         });
+
+        Log::info('Fetch Posts Job Completed');
     }
 }

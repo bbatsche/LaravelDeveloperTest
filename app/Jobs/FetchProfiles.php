@@ -10,6 +10,7 @@ use App\Repository\RepositoryInterface;
 use App\Services\EntityFetcherInterface;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Facades\Log;
 
 final class FetchProfiles implements ShouldQueue
 {
@@ -22,10 +23,19 @@ final class FetchProfiles implements ShouldQueue
      */
     public function handle(EntityFetcherInterface $client, RepositoryInterface $repo): void
     {
+        Log::info('Starting Fetch Profiles Job');
+
         $client->fetchEntities()->each(function (ProfileData $profile) use ($repo): void {
-            if (! $repo->exists($profile->profileId)) {
-                $repo->create($profile);
+            if ($repo->exists($profile->profileId)) {
+                Log::debug('Profile already exists in database', compact('profile'));
+
+                return;
             }
+
+            $repo->create($profile);
+            Log::info('Profile created', compact('profile'));
         });
+
+        Log::info('Fetch Profiles Job Completed');
     }
 }
