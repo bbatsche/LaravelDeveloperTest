@@ -79,39 +79,43 @@ by the agent. Here is what we are looking for:
 - Describe the quality of the code created and what process you went through to evaluate the code.
 - Describe the changes you made to the agentically created code.
 
-## Getting Started (To Be Completed by Candidate)
-
-When you complete your submission, replace this section with instructions for setting up and running your project.
-Your instructions should include:
-
-```markdown
 ## Getting Started
 
 ### Prerequisites
-- PHP 8.x
+- PHP 8.4+ (I used asymmetric visibility for some properties)
 - Composer
 - Node.js & npm
-- [Database of your choice]
+- MySQL
+- [DDEV](https://ddev.com/)
 
 ### Installation
 1. Clone the repository
-2. Copy `.env.example` to `.env`
-3. [Your specific setup steps]
-4. Run migrations
-5. [Any seeding or initial data setup]
+2. Make sure [DDEV is installed](https://ddev.com/get-started/)
+3. Start containers with `ddev start`
+   - You may create a `.ddev/config.local.yaml` for any local overrides to the default configuration (for example, if there are any port conflicts)
+   - DDEV will configure your `.env` file for you
+4. Install dependencies:
+   - `ddev composer install`
+   - `ddev npm ci`
+5. Generate your key: `ddev artisan key:generate`
+6. Run migrations: `ddev artisan migrate`
 
 ### Running the Application
-- Start the development server: [command]
-- Access the application at: [URL]
+- Start the development servers:
+  - `ddev start` (if you haven't already)
+  - `ddev npm run dev`
+- The application URL can be found by running: `ddev describe`
 
 ### Testing the Data Import
-- Run the artisan command: `php artisan [your-command]`
-- View the imported data at: [URL]
-- The scheduled task runs: [frequency]
+- Data can be imported manually by:
+  - `ddev artisan fetch:profiles`
+  - `ddev artisan fetch:posts`
+  - Note: there is a dependency on profiles by posts, so they should be imported first
+- View the imported data at the url found by running `ddev describe`
+- The scheduled task runs every hour. In practice the source data is static, however once an hour felt like a "realistic" schedule for importing blog posts.
 
 ### Running Tests
-- Run the test suite: `php artisan test`
-```
+- Run the test suite: `ddev composer test`
 
 ## Evaluation Criteria
 
