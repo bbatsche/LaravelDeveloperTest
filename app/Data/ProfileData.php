@@ -47,13 +47,12 @@ final class ProfileData extends Data
         public private(set) Optional|DateTimeImmutable $createdAt,
         public private(set) Optional|DateTimeImmutable $updatedAt,
     ) {
-        $this->telHref = is_null($this->extension)
-            ? "tel:{$this->phone}"
-            : "tel:{$this->phone},{$this->extension}";
         $this->formattedPhone = '('.substr($this->phone, 0, 3).') '.substr($this->phone, 3, 3).'-'.substr($this->phone, 6);
+        $this->telHref = "tel:{$this->phone}";
 
-        if (! is_null($this->extension)) {
+        if (! is_null($this->extension) && ! $this->extension instanceof Optional) {
             $this->formattedPhone .= " ext. {$this->extension}";
+            $this->telHref .= ",{$this->extension}";
         }
     }
 
