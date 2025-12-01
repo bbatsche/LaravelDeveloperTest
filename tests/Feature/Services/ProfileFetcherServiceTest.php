@@ -121,7 +121,7 @@ describe('transformResponseData()', function (): void {
     });
 });
 
-describe('fetchProfiles()', function (): void {
+describe('fetchEntities()', function (): void {
     it('can handle an empty response', function (): void {
         $mockClient = Mockery::mock(PlaceholderApiInterface::class);
         $service = new ProfileFetcherService($mockClient);
@@ -130,7 +130,7 @@ describe('fetchProfiles()', function (): void {
             ->getUsers()
             ->andReturn([]);
 
-        expect($service->fetchProfiles())->toBeEmpty();
+        expect($service->fetchEntities())->toBeEmpty();
     });
 
     it('wraps response in a collection of ProfileData', function (): void {
@@ -188,7 +188,7 @@ describe('fetchProfiles()', function (): void {
             ->getUsers()
             ->andReturn($response);
 
-        $profiles = $service->fetchProfiles();
+        $profiles = $service->fetchEntities();
 
         expect($profiles)->toHaveCount(2);
         expect($profiles->first())->toBeInstanceOf(ProfileData::class);

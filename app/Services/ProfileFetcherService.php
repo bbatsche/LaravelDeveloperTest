@@ -10,19 +10,16 @@ use Illuminate\Support\Collection;
 
 /**
  * Utility for fetching user/profile data from JSON Placeholder API and transforming it into data objects.
+ *
+ * @implements EntityFetcherInterface<ProfileData>
  */
-final class ProfileFetcherService
+final class ProfileFetcherService implements EntityFetcherInterface
 {
     public function __construct(
         private PlaceholderApiInterface $client
     ) {}
 
-    /**
-     * Get all users/profiles and wrap them in a Collection of ProfileData
-     *
-     * @return Collection<ProfileData>
-     */
-    public function fetchProfiles(): Collection
+    public function fetchEntities(): Collection
     {
         $users = $this->client->getUsers();
 

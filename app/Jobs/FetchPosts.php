@@ -7,7 +7,8 @@ namespace App\Jobs;
 use App\Data\PostData;
 use App\Repository\PostRepository;
 use App\Repository\ProfileRepository;
-use App\Services\PostFetcherService;
+use App\Repository\RepositoryInterface;
+use App\Services\EntityFetcherInterface;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 
@@ -17,13 +18,16 @@ final class FetchPosts implements ShouldQueue
 
     /**
      * Execute the job.
+     *
+     * @param  PostRepository  $postRepo
+     * @param  ProfileRepository  $profileRepo
      */
     public function handle(
-        PostFetcherService $client,
-        PostRepository $postRepo,
-        ProfileRepository $profileRepo,
+        EntityFetcherInterface $client,
+        RepositoryInterface $postRepo,
+        RepositoryInterface $profileRepo,
     ): void {
-        $client->fetchPosts()->each(function (PostData $post) use ($postRepo, $profileRepo): void {
+        $client->fetchEntities()->each(function (PostData $post) use ($postRepo, $profileRepo): void {
             if (! $profileRepo->exists($post->profileId)) {
                 // There is no profile for this post; has profile job not been run yet?
                 return;

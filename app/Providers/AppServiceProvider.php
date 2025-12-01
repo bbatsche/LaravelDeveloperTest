@@ -6,11 +6,16 @@ namespace App\Providers;
 
 use App\Data\PostData;
 use App\Data\ProfileData;
+use App\Jobs\FetchPosts;
+use App\Jobs\FetchProfiles;
 use App\Repository\PostRepository;
 use App\Repository\ProfileRepository;
 use App\Services\PlaceholderApiInterface;
 use App\Services\PlaceholderApiService;
+use App\Services\PostFetcherService;
+use App\Services\ProfileFetcherService;
 use GuzzleHttp\Client;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -41,6 +46,20 @@ final class AppServiceProvider extends ServiceProvider
         });
         Route::bind('post', function (string $id): PostData {
             return $this->app->get(PostRepository::class)->find((int) $id);
+        });
+
+        $this->app->bindMethod([FetchPosts::class, 'handle'], function (FetchPosts $job, Application $app): void {
+            $job->handle(
+                $app->make(PostFetcherService::class),
+                $app->make(PostRepository::class),
+                $app->make(ProfileRepository::class),
+            );
+        });
+        $this->app->bindMethod([FetchProfiles::class, 'handle'], function (FetchProfiles $job, Application $app): void {
+            $job->handle(
+                $app->make(ProfileFetcherService::class),
+                $app->make(ProfileRepository::class),
+            );
         });
     }
 }

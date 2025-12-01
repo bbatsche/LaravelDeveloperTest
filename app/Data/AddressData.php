@@ -38,7 +38,7 @@ final class AddressData extends Data
         public private(set) Optional|DateTimeImmutable $createdAt,
         public private(set) Optional|DateTimeImmutable $updatedAt,
     ) {
-        $this->fullZip = is_null($this->zip4)
+        $this->fullZip = (is_null($this->zip4) || $this->zip4 instanceof Optional)
             ? $this->zip
             : $this->zip.'-'.$this->zip4;
     }

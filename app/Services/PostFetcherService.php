@@ -10,19 +10,16 @@ use Illuminate\Support\Collection;
 
 /**
  * Utility for fetching posts data from JSON Placeholder API and transforming it into data objects.
+ *
+ * @implements EntityFetcherInterface<PostData>
  */
-final class PostFetcherService
+final class PostFetcherService implements EntityFetcherInterface
 {
     public function __construct(
         private PlaceholderApiInterface $client
     ) {}
 
-    /**
-     * Get all posts and wrap them in a Collection of PostData
-     *
-     * @return Collection<PostData>
-     */
-    public function fetchPosts(): Collection
+    public function fetchEntities(): Collection
     {
         $posts = Arr::map($this->client->getPosts(), fn ($post) => $this->transformPost($post));
 
